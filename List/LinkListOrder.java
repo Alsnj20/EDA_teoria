@@ -12,12 +12,9 @@ public class LinkListOrder<T extends Comparable<T>> extends LinkList1<T> {
     Node<T> node = new Node<>(data);
     if (isEmpty()) {
       this.head = node;
-    } else if (this.head.getNext() == null) {
-      if (this.head.getData().compareTo(node.getData()) < 0) {
-        this.head.setNext(node);
-      } else {
-        node.setNext(this.head);
-      }
+    } else if (this.head.getNext() == null && this.head.getData().compareTo(node.getData()) > 0){
+      node.setNext(this.head);
+      this.head = node;
     } else {
       Node<T> aux = this.head;
       while (aux.getNext() != null && aux.getNext().getData().compareTo(node.getData()) < 0) {
@@ -62,7 +59,9 @@ public class LinkListOrder<T extends Comparable<T>> extends LinkList1<T> {
       while(aux.getNext() != null && aux.getNext().getData().compareTo(data) < 0){
         aux = aux.getNext();
       }
-      aux.setNext(aux.getNext().getNext());   
+      if(aux.getNext() != null && aux.getNext().getData().equals(data)){
+        aux.setNext(aux.getNext().getNext());
+      } 
     }
   }
 
@@ -76,8 +75,8 @@ public class LinkListOrder<T extends Comparable<T>> extends LinkList1<T> {
     list.insertFirstLast(4);
     System.out.println(list.toString());
     /*Remove */
-    System.out.println("Remove");
-    list.remove(5);
+    System.out.println("Remove 3");
+    list.remove(3);
     System.out.println("List: ");
     System.out.println(list.toString());
   }
