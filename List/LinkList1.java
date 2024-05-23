@@ -52,8 +52,6 @@ public class LinkList1<T> implements ListIt<T>{
       }
       aux.setNext(aux.getNext().getNext());   
     }
-    
-
   }
   public boolean isEmpty(){
     return this.head == null;
