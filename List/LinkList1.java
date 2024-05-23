@@ -1,7 +1,7 @@
 package List;
 
 public class LinkList1<T> implements ListIt<T>{
-  private Node<T> head;
+  protected Node<T> head;
 
   public LinkList1(){
     this.head = null;
@@ -34,7 +34,6 @@ public class LinkList1<T> implements ListIt<T>{
     int pos = 0;
     Node<T> aux = this.head;
     while(aux != null && !aux.getData().equals(data)){
-      System.out.println("Posicion: "+pos+" Node: "+aux.printNode());
       pos++;
       aux = aux.getNext();
     }
@@ -49,19 +48,9 @@ public class LinkList1<T> implements ListIt<T>{
     }else{
       Node<T> aux = this.head;
       while(aux.getNext() != null && !aux.getNext().getData().equals(data)){
-        System.out.println("Node: "+aux.printNode());
-        if(aux.getData().equals(data)){
-          System.out.println("Entro: "+aux.printNode());
-        }
         aux = aux.getNext();
       }
-      System.out.println("Salio");
-      System.out.println("Node: "+aux.printNode());
-      Node<T> next = aux.getNext();
-      System.out.println("Nodo eliminado:" +next.printNode());
-      aux.setNext(aux.getNext().getNext());
-      System.out.println("Node Next: "+aux.getNext().printNode());
-      
+      aux.setNext(aux.getNext().getNext());   
     }
     
 
@@ -78,6 +67,10 @@ public class LinkList1<T> implements ListIt<T>{
       aux = aux.getNext();
     }
     return str;
+  }
+
+  public Node<T> getHead(){
+    return this.head;
   }
   public static void main(String[] args) {
     ListIt<Integer> list = new LinkList1<Integer>();
@@ -96,5 +89,6 @@ public class LinkList1<T> implements ListIt<T>{
     System.out.println(list.search(4));
     System.out.println("Eliminando 4");
     list.remove(4);
+    System.out.println(list.toString());
   }
 }
