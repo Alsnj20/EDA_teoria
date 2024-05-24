@@ -1,6 +1,8 @@
 package Cola;
 
-public interface Queue<T> extends Exeption{
+import Pilas.*;
+
+public interface Queue<T>{
   void enqueue(T data);
   //Void o T, devuelve lo que esta sacando
   T dequeue() throws ExceptionIsEmpty;
