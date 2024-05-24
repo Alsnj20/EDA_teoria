@@ -3,19 +3,24 @@ import List.*;
 //LIFO
 public class Pila<T> implements Stack<T>{
 
-  private int tope = -1;
+  private int tope;
   private int size;
-  private T[] pila;
+  private T[] pilaArray;
 
   public Pila(int size){
     this.size = size;
-    pila = (T[]) new Object[size];
+    this.pilaArray = (T[]) new Object[size];
+    this.tope = -1;
   }
 
   public void push(T data){
-    if(tope < size-1){
-      tope++;
-      pila[tope] = data;
+    if(!isFull()){
+      /*tope++;
+      pilaArray[tope] = data;*/
+      pilaArray[++tope] = data;
+    }else{
+      T[] pilaArray2 = (T[]) new Object[this.size*2];
+      this.pilaArray = pilaArray2;    
     }
   }
 
@@ -23,14 +28,25 @@ public class Pila<T> implements Stack<T>{
     return null;
   }
   public T top(){
-    return null;
+    if(isEmpty())
+    return this.pilaArray[this.tope];
   }
   public boolean isEmpty(){
-    return true;
+    return this.tope == -1;
+  }
+
+  public boolean isFull(){
+    return this.tope == this.pilaArray.length-1;
   }
 
   public String toString(){
-    return "";
+    String str = "";
+    for (int i = this.tope; i >= 0; i--) {
+      if(this.pilaArray[i] != null){
+        str += this.pilaArray[i] + "\n";
+      }
+    }
+    return str;
   }
 
 
