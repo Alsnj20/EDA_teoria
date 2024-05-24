@@ -1,6 +1,6 @@
 package Pilas;
 import List.*;
-
+//LIFO
 public class Pila<T> implements Stack<T>{
 
   private int tope = -1;
