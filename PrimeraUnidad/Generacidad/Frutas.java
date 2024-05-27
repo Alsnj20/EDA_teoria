@@ -1,4 +1,5 @@
-package Trabajo;
+package PrimeraUnidad.Generacidad;
+
 
 public abstract class Frutas {
   private String nombre;

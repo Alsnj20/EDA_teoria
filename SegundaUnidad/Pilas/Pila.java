@@ -1,6 +1,4 @@
-package Pilas;
-
-import List.*;
+package SegundaUnidad.Pilas;
 
 //LIFO
 public class Pila<T>implements Stack<T> {

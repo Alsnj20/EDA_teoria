@@ -1,4 +1,5 @@
-package Trabajo;
+package PrimeraUnidad.Generacidad;
+
 public class Mochila {
   public static void main(String[] args) {
     int[] pesos = {60, 100, 120, 40};

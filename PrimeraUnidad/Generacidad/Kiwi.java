@@ -1,4 +1,5 @@
-package Trabajo;
+package PrimeraUnidad.Generacidad;
+
 
 public class Kiwi extends Frutas{
   private int sabor;

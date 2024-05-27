@@ -1,4 +1,7 @@
-package Trabajo;
+package PrimeraUnidad.Generacidad;
+import PrimeraUnidad.Generacidad.Kiwi;
+import PrimeraUnidad.Generacidad.Frutas;
+import PrimeraUnidad.Generacidad.Platano;
 
 public class Caja<TypeData extends Comparable<TypeData>> {
   private TypeData dato;

@@ -1,4 +1,4 @@
-package Trabajo;
+package PrimeraUnidad.Generacidad;
 
 /* Clases genericas */
 

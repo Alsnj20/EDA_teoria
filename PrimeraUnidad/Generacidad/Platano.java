@@ -1,4 +1,5 @@
-package Trabajo;
+package PrimeraUnidad.Generacidad;
+
 
 public class Platano extends Frutas{
   private int sabor;

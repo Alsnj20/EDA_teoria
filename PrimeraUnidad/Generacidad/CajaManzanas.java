@@ -1,4 +1,5 @@
-package Trabajo;
+package PrimeraUnidad.Generacidad;
+import PrimeraUnidad.Generacidad.Manzana;
 
 public class CajaManzanas extends Caja<Manzana>{
   public CajaManzanas(){

@@ -1,4 +1,5 @@
-package Trabajo;
+package PrimeraUnidad.Generacidad;
+
 
 public class Segmento {
   public static void main(String[] args) {

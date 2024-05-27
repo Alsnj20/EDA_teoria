@@ -1,5 +1,4 @@
-package Trabajo;
-
+package PrimeraUnidad.Generacidad;
 public class CajaObject {
   private Object dato;
   public CajaObject(){
