@@ -1,4 +1,4 @@
-package SegundaUnidad.Pilas;
+package Pilas;
 //LIFO
 public interface Stack<T> {
   void push(T data);

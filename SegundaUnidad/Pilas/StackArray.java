@@ -1,4 +1,4 @@
-package SegundaUnidad.Pilas;
+package Pilas;
 
 public class StackArray<T> implements Stack<T>{
   private int tope;

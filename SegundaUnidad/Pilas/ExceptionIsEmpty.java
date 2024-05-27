@@ -1,4 +1,4 @@
-package SegundaUnidad.Pilas;
+package Pilas;
 
 public class ExceptionIsEmpty extends Exception{
   public ExceptionIsEmpty(){
