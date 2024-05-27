@@ -68,6 +68,9 @@ public class StackArray<T> implements Stack<T>{
       pila.push(5);
       pila.push(6);
       System.out.println(pila.toString());
+      System.out.println(pila.pop());
+      System.out.println(pila.top());
+      System.out.println(pila.toString());
     }catch(Exception e){
       System.out.println(e.getMessage());
     }
