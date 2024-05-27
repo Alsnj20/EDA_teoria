@@ -1,46 +1,48 @@
 package Pilas;
+
 import List.Node;
 
-public class StackList<T> implements Stack<T>{
+public class StackList<T> implements Stack<T> {
   private Node<T> tope;
 
-  public StackList(){
+  public StackList() {
     this.tope = null;
   }
 
-  public void push(T data){
-    if(!isFull()){
-      Node<T> aux = new Node<T>(data);
-      aux.setNext(this.tope);
-      this.tope = aux;
-    }
+  public void push(T data) {
+    Node<T> aux = new Node<T>(data);
+    aux.setNext(this.tope);
+    this.tope = aux;
   }
 
-  public T pop() throws ExceptionIsEmpty{
-    if(!isEmpty()){
+  public T pop() throws ExceptionIsEmpty {
+    if (!isEmpty()) {
       T data = this.tope.getData();
-      this.tope = this.tope.getNext(); //tope == null;
+      this.tope = this.tope.getNext(); // tope == null;
       return data;
     }
     return null;
   }
 
-  public T top() throws ExceptionIsEmpty{
-    return (!isEmpty())? this.tope.getData(): null;
+  public T top() throws ExceptionIsEmpty {
+    return (!isEmpty()) ? this.tope.getData() : null;
   }
 
-  public boolean isEmpty(){
+  public boolean isEmpty() {
     return (this.tope == null);
   }
 
-  public boolean isFull(){
-    return this.tope.getNext() == null;
-  }
+  // this method is not used, because the stack is never full
+  /*
+   * public boolean isFull(){
+   * return this.tope.getNext() == null;
+   * }
+   */
 
-  public String toString(){
+  public String toString() {
     String str = "";
     Node<T> aux = this.tope;
-    while(aux != null){
+    while (aux != null) {
       str += aux.printNode();
       aux = aux.getNext();
     }
@@ -49,14 +51,18 @@ public class StackList<T> implements Stack<T>{
 
   public static void main(String[] args) {
     Stack<Character> st = new StackList<>();
-    try{
+    try {
       st.push('a');
       st.push('b');
       st.push('c');
       System.out.println(st.toString());
+      System.out.println("Top: ");
       System.out.println(st.top());
       System.out.println(st.toString());
-    }catch(ExceptionIsEmpty e){
+      System.out.println("Pop: ");
+      System.out.println(st.pop());
+      System.out.println(st.toString());
+    } catch (ExceptionIsEmpty e) {
       System.out.println(e.getMessage());
     }
   }
