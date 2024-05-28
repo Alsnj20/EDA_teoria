@@ -20,18 +20,18 @@ public class BST<T extends Comparable<T>> {
     Node<T> res = searchNode(x, root);
     if (res == null)
       throw new ItemNotFound("El dato " + x + "no esta");
-    return res.data;
+    return res.getData();
   }
 
   protected Node<T> searchNode(T x, Node<T> n) {
     if (n == null)
       return null;
     else {
-      int resC = n.data.compareTo(x);
+      int resC = n.getData().compareTo(x);
       if (resC < 0)
-        return searchNode(x, n.right);
+        return searchNode(x, n.getRight());
       else if (resC > 0)
-        return searchNode(x, n.left);
+        return searchNode(x, n.getLeft());
       else
         return n;
     }
