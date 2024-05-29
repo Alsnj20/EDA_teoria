@@ -8,8 +8,27 @@ public class BST<T extends Comparable<T>> {
     this.root = null;
   }
 
-  public void inser(T x) {
-    return;
+  public void insert(T x) throws ItemDuplicated {
+    this.root = insertNode(x, this.root);
+  }
+
+  protected Node<T> insertNode(T x, Node<T> actual) throws ItemDuplicated {
+    Node<T> res = actual;
+    if (actual == null) {
+      res = new Node<T>(x);
+    } else {
+      res = new Node<T>(x);
+      // buscamos el lugar para inserción
+      int resC = actual.getData().compareTo(x);
+      if (resC == 0)
+        throw new ItemDuplicated(x + "esta duplcado");
+      if (resC < 0)
+        res.setRight(insertNode(x, actual.getRight()));
+      else
+        res.setLeft(insertNode(x, actual.getLeft()));
+    }
+    return res;
+
   }
 
   public void remove(T x) {
