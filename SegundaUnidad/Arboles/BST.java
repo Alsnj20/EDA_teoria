@@ -82,10 +82,10 @@ public class BST<T extends Comparable<T>> {
 
   // Elimina el menor de la izquierda de un nodo
   protected Node<T> minRemove(Node<T> actual) {
-    if (actual.left != null) { // busca el mínimo
-      actual.left = minRemove(actual.left);
+    if (actual.getLeft() != null) { // busca el mínimo
+      actual.setLeft(minRemove(actual.getLeft()));
     } else { // elimina el mínimo
-      actual = actual.right;
+      actual = actual.getRight();
     }
     return actual;
   }
@@ -105,5 +105,31 @@ public class BST<T extends Comparable<T>> {
     if(actual.getLeft() != null) res += postOrder(actual.getLeft());
     if(actual.getRight() != null) res += postOrder(actual.getRight());
     return res + actual.getData().toString()+ "\n";
+  }
+
+  public String inOrder(){
+    if(this.root != null) return inOrder(this.root);
+    return "*";
+  }
+
+  protected String inOrder(Node<T> actual){
+    String res = "";
+    if(actual.getLeft() != null) res += inOrder(actual.getLeft());
+    res += actual.getData().toString() + "\n";
+    if(actual.getRight() != null) res += inOrder(actual.getRight());
+    return res;
+  }
+
+  public String preOrder(){
+    if(this.root != null) return preOrder(this.root);
+    return "*";
+  }
+
+  protected String preOrder(Node<T> actual){
+    String res = "";
+    res += actual.getData().toString() + "\n";
+    if(actual.getLeft() != null) res += preOrder(actual.getLeft());
+    if(actual.getRight() != null) res += preOrder(actual.getRight());
+    return res;
   }
 }
