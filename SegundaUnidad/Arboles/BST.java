@@ -23,12 +23,11 @@ public class BST<T extends Comparable<T>> {
       if (resC == 0)
         throw new ItemDuplicated(x + "esta duplicado");
       if (resC < 0)
-        res.setRight(insertNode(x, actual.getRight()));
+        res.setRight((insertNode(x, actual.getRight())));
       else
         res.setLeft(insertNode(x, actual.getLeft()));
     }
     return res;
-
   }
 
   public T search(T x) throws ItemNotFound {
@@ -82,11 +81,23 @@ public class BST<T extends Comparable<T>> {
 
   // Elimina el menor de la izquierda de un nodo
   protected Node<T> minRemove(Node<T> actual) {
-    if (actual.getLeft() != null) { // busca el mínimo
+    if (actual.getLeft() != null) {
       actual.setLeft(minRemove(actual.getLeft()));
-    } else { // elimina el mínimo
+    } else { 
       actual = actual.getRight();
     }
+    return actual;
+  }
+
+  public T minRecover() {
+    Node<T> res = minRecover(this.root);
+    return res.getData();
+  }
+
+  // Devuelve el nodo con el valor minimo del arbol
+  protected Node<T> minRecover(Node<T> actual) {
+    if (actual.getLeft() != null)
+      return minRecover(actual.getLeft());
     return actual;
   }
 
@@ -94,42 +105,128 @@ public class BST<T extends Comparable<T>> {
     return this.root == null;
   }
 
-  //Recorridos
-  public String postOrder(){
-    if(this.root != null) return postOrder(this.root);
+  // Reciclado de código
+  public T minRemove2() {
+    Node<T> minNode = new Node<T>(null);
+    this.root = minRemove(this.root, minNode);
+    return minNode.getData();
+  }
+
+  protected Node<T> minRemove(Node<T> actual, Node<T> minNode) {
+    if (actual.getLeft() != null) { 
+      actual.setLeft(minRemove(actual.getLeft(), minNode));
+    } else { 
+      minNode.setData(actual.getData());
+      actual = actual.getRight();
+    }
+    return actual;
+  }
+
+  // Recorridos
+  public String postOrder() {
+    if (this.root != null)
+      return postOrder(this.root);
     return "*";
   }
 
-  protected String postOrder(Node<T> actual){
+  protected String postOrder(Node<T> actual) {
     String res = "";
-    if(actual.getLeft() != null) res += postOrder(actual.getLeft());
-    if(actual.getRight() != null) res += postOrder(actual.getRight());
-    return res + actual.getData().toString()+ "\n";
+    if (actual.getLeft() != null)
+      res += postOrder(actual.getLeft());
+    if (actual.getRight() != null)
+      res += postOrder(actual.getRight());
+    return res + actual.getData().toString() + "\n";
   }
 
-  public String inOrder(){
-    if(this.root != null) return inOrder(this.root);
+  public String inOrder() {
+    if (this.root != null)
+      return inOrder(this.root);
     return "*";
   }
 
-  protected String inOrder(Node<T> actual){
+  protected String inOrder(Node<T> actual) {
     String res = "";
-    if(actual.getLeft() != null) res += inOrder(actual.getLeft());
+    if (actual.getLeft() != null)
+      res += inOrder(actual.getLeft());
     res += actual.getData().toString() + "\n";
-    if(actual.getRight() != null) res += inOrder(actual.getRight());
+    if (actual.getRight() != null)
+      res += inOrder(actual.getRight());
     return res;
   }
 
-  public String preOrder(){
-    if(this.root != null) return preOrder(this.root);
+  public String preOrder() {
+    if (this.root != null)
+      return preOrder(this.root);
     return "*";
   }
 
-  protected String preOrder(Node<T> actual){
+  protected String preOrder(Node<T> actual) {
     String res = "";
     res += actual.getData().toString() + "\n";
-    if(actual.getLeft() != null) res += preOrder(actual.getLeft());
-    if(actual.getRight() != null) res += preOrder(actual.getRight());
+    if (actual.getLeft() != null)
+      res += preOrder(actual.getLeft());
+    if (actual.getRight() != null)
+      res += preOrder(actual.getRight());
     return res;
+  }
+
+  public String printTree(Node<T> actual, int level) {
+    String res = "";
+    if (actual != null) {
+      res += printTree(actual.getRight(), level + 1);
+      for (int i = 0; i < level; i++)
+        res += "   ";
+      res += actual.getData().toString() + "\n";
+      res += printTree(actual.getLeft(), level + 1);
+    }
+    System.out.println(res);
+    return res;
+  }
+
+
+  public static void main(String[] args) {
+    BST<Integer> arbol = new BST<Integer>();
+    try {
+      arbol.insert(18);
+      arbol.insert(10);
+      System.out.println("Recorrido en preorden");
+      System.out.println(arbol.preOrder());
+      System.out.println("Recorrido en inorden");
+      System.out.println(arbol.inOrder());
+      System.out.println("Recorrido en postorden");
+      System.out.println(arbol.postOrder());
+      System.out.println("Arbol");
+      System.out.println(arbol.printTree(arbol.root, 0));
+      System.out.println("Eliminando el 5");
+      arbol.remove(5);
+      System.out.println("Arbol");
+      System.out.println(arbol.printTree(arbol.root, 0));
+      System.out.println("Eliminando el 15");
+      arbol.remove(15);
+      System.out.println("Arbol");
+      System.out.println(arbol.printTree(arbol.root, 0));
+      System.out.println("Eliminando el 10");
+      arbol.remove(10);
+      System.out.println("Arbol");
+      System.out.println(arbol.printTree(arbol.root, 0));
+      System.out.println("Eliminando el 1");
+      arbol.remove(1);
+      System.out.println("Arbol");
+      System.out.println(arbol.printTree(arbol.root, 0));
+      System.out.println("Eliminando el 18");
+      arbol.remove(18);
+      System.out.println("Arbol");
+      System.out.println(arbol.printTree(arbol.root, 0));
+      System.out.println("Eliminando el 13");
+      arbol.remove(13);
+      System.out.println("Arbol");
+      System.out.println(arbol.printTree(arbol.root, 0));
+      System.out.println("Eliminando el 11");
+      arbol.remove(11);
+      System.out.println("Arbol");
+      System.out.println(arbol.printTree(arbol.root, 0));
+  }catch(Exception e){
+    System.out.println(e.getMessage());
+  }
   }
 }
