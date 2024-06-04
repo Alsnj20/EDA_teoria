@@ -6,6 +6,7 @@ public class QueueArray<T> implements Queue<T> {
   private T[] queue;
   private int front;
   private int back;
+  private int count;
 
   public QueueArray(int size) {
     this.queue = (T[]) new Object[size];
@@ -27,6 +28,7 @@ public class QueueArray<T> implements Queue<T> {
     }
     back = (back + 1) % queue.length;
     queue[back] = data;
+    count++;
   }
 
   // Quitamos el primer elemento en entrar
@@ -34,6 +36,7 @@ public class QueueArray<T> implements Queue<T> {
     if (!isEmpty()) {
       T data = queue[front];
       front = (front + 1) % queue.length;
+      count--;
       return data;
     } else {
       throw new ExceptionIsEmpty("Queue is empty");
@@ -59,11 +62,11 @@ public class QueueArray<T> implements Queue<T> {
   }
 
   public boolean isEmpty() {
-    return (front == back);
+    return (count == 0);
   }
 
   public boolean isFull() {
-    return (back == this.queue.length - 1);
+    return (count == this.queue.length);
   }
 
   public String toString() {

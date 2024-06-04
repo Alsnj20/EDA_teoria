@@ -21,7 +21,7 @@ public class BST<T extends Comparable<T>> {
       // buscamos el lugar para inserción
       int resC = actual.getData().compareTo(x);
       if (resC == 0)
-        throw new ItemDuplicated(x + "esta duplcado");
+        throw new ItemDuplicated(x + "esta duplicado");
       if (resC < 0)
         res.setRight(insertNode(x, actual.getRight()));
       else
@@ -29,10 +29,6 @@ public class BST<T extends Comparable<T>> {
     }
     return res;
 
-  }
-
-  public void remove(T x) {
-    return;
   }
 
   public T search(T x) throws ItemNotFound {
@@ -54,5 +50,60 @@ public class BST<T extends Comparable<T>> {
       else
         return n;
     }
+  }
+
+  public void remove(T x) throws ItemNotFound {
+    this.root = removeNode(x, this.root);
+  }
+
+  protected Node<T> removeNode(T x, Node<T> actual) throws ItemNotFound {
+    Node<T> res = actual;
+    if (actual == null)
+      throw new ItemNotFound(x + "no esta");
+    int resC = actual.getData().compareTo(x);
+    if (resC < 0)
+      res.setRight(removeNode(x, actual.getRight()));
+    else if (resC > 0)
+      res.setLeft(removeNode(x, actual.getLeft()));
+    else if (actual.getLeft() != null && actual.getRight() != null) {// dos hijos
+      res.setData(minRecover(actual.getRight()).getData());
+      res.setRight(minRemove(actual.getRight()));
+    } else { // 1 hijo o ninguno
+      res = (actual.getLeft() != null) ? actual.getLeft() : actual.getRight();
+    }
+    return res;
+  }
+
+  public T minRemove() {
+    T min = minRecover(); // devuelve el menor del árbol
+    this.root = minRemove(this.root);
+    return min;
+  }
+
+  // Elimina el menor de la izquierda de un nodo
+  protected Node<T> minRemove(Node<T> actual) {
+    if (actual.left != null) { // busca el mínimo
+      actual.left = minRemove(actual.left);
+    } else { // elimina el mínimo
+      actual = actual.right;
+    }
+    return actual;
+  }
+
+  public boolean isEmpty() {
+    return this.root == null;
+  }
+
+  //Recorridos
+  public String postOrder(){
+    if(this.root != null) return postOrder(this.root);
+    return "*";
+  }
+
+  protected String postOrder(Node<T> actual){
+    String res = "";
+    if(actual.getLeft() != null) res += postOrder(actual.getLeft());
+    if(actual.getRight() != null) res += postOrder(actual.getRight());
+    return res + actual.getData().toString()+ "\n";
   }
 }
