@@ -17,11 +17,26 @@ public class NodeAVL<T> extends Node<T> {
   public int getFE() {
     return this.fe;
   }
+  public NodeAVL<T> getLeft() {
+    return (NodeAVL<T>) super.getLeft();
+  }
+
+  public NodeAVL<T> getRight() {
+    return (NodeAVL<T>) super.getRight();
+  }
 
   public void setFE(int fe) {
     this.fe = fe;
   }
 
+  public void setLeft(NodeAVL<T> left) {
+    super.setLeft(left);
+  }
+
+  public void setRight(NodeAVL<T> right) {
+    super.setRight(right);
+  }
+  
   public String toString() {
     return super.toString() + " FE:" + this.fe;
   }
