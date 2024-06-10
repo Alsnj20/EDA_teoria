@@ -17,6 +17,7 @@ public class NodeAVL<T> extends Node<T> {
   public int getFE() {
     return this.fe;
   }
+
   public NodeAVL<T> getLeft() {
     return (NodeAVL<T>) super.getLeft();
   }
@@ -25,8 +26,22 @@ public class NodeAVL<T> extends Node<T> {
     return (NodeAVL<T>) super.getRight();
   }
 
-  public void setFE(int fe) {
+  private void setFE(int fe) {
     this.fe = fe;
+  }
+
+  public void updateFE() {
+    if (this != null) {
+      int left = this.getLeft() == null ? 0 : this.getLeft().height();
+      int right = this.getRight() == null ? 0 : this.getRight().height();
+      this.setFE(right - left);
+    }
+  }
+
+  private int height() {
+    int left = this.getLeft() == null ? 0 : this.getLeft().height();
+    int right = this.getRight() == null ? 0 : this.getRight().height();
+    return 1 + Math.max(left, right);
   }
 
   public void setLeft(NodeAVL<T> left) {
@@ -36,12 +51,13 @@ public class NodeAVL<T> extends Node<T> {
   public void setRight(NodeAVL<T> right) {
     super.setRight(right);
   }
-  
+
   public String toString() {
-    return "[data:" + this.getData()+", fe:" + this.fe + "]";
+    return "[data:" + this.getData() + ", fe:" + this.fe + "]";
   }
-  public String printNode(){
-    return "{left:"+ this.getLeft()+",data:" + this.getData()+" ,right:" + this.getRight()+", fe:" + this.fe +"}";
+
+  public String printNode() {
+    return "{left:" + this.getLeft() + ",data:" + this.getData() + " ,right:" + this.getRight() + ", fe:" + this.fe
+        + "}";
   }
-  
 }
