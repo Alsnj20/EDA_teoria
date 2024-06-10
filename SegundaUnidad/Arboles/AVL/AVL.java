@@ -32,14 +32,28 @@ public class AVL<T extends Comparable<T>> {
         res.setRight((insertNode(x, actual.getRight())));
       else
         res.setLeft(insertNode(x, actual.getLeft()));
+        
       // actualizamos el factor de equilibrio
-      res.setFE(res.getFE() + (resC < 0 ? 1 : -1));
-      // balanceamos el arbol}
-      System.out.println("RES: " + res);
-      System.out.println("RES.FE: " + res.getFE());
-      balance(res);
+      res.updateFE();
     }
-    return res;
+    return balance(res);
+  }
+
+  protected NodeAVL<T> balance(NodeAVL<T> node) {
+    if (node.getFE() == -2) {
+      if (node.getLeft().getFE() == -1) {
+        return rotateSR(node);
+      } else {
+        return rotateDR(node);
+      }
+    } else if (node.getFE() == 2) {
+      if (node.getRight().getFE() == 1) {
+        return rotateSL(node);
+      } else {
+        return rotateDL(node);
+      }
+    }
+    return node;
   }
 
   public void printListTree() {
@@ -66,22 +80,6 @@ public class AVL<T extends Comparable<T>> {
         System.out.println(node.printNode());
       } else {
         System.out.println("null");
-      }
-    }
-  }
-
-  protected void balance(NodeAVL<T> node) {
-    if (node.getFE() == -2) {
-      if (node.getLeft().getFE() == 1) {
-        node = rotateSR(node);
-      } else {
-        node = rotateDR(node);
-      }
-    } else if (node.getFE() == 2) {
-      if (node.getRight().getFE() == -1) {
-        node = rotateSL(node);
-      } else {
-        node = rotateDL(node);
       }
     }
   }
@@ -121,29 +119,30 @@ public class AVL<T extends Comparable<T>> {
     NodeAVL<T> h = node.getLeft();
     node.setLeft(h.getRight());
     h.setRight(node);
-    return node;
+    node.updateFE();
+    h.updateFE();
+    return h;
   }
 
   protected NodeAVL<T> rotateSL(NodeAVL<T> node) {
     NodeAVL<T> h = node.getRight();
     node.setRight(h.getLeft());
     h.setLeft(node);
-    return node;
+    node.updateFE();
+    h.updateFE();
+    return h;
   }
 
   protected NodeAVL<T> rotateDR(NodeAVL<T> node) {
     NodeAVL<T> h = node.getLeft();
     node.setLeft(rotateSL(h));
-    node = rotateSR(node);
-    return node;
-
+    return rotateSR(node);
   }
 
   protected NodeAVL<T> rotateDL(NodeAVL<T> node) {
     NodeAVL<T> h = node.getRight();
     node.setRight(rotateSR(h));
-    node = rotateSL(node);
-    return node;
+    return rotateSL(node);
   }
 
   public void printTree() {

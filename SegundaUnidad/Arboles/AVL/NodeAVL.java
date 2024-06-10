@@ -44,6 +44,20 @@ public class NodeAVL<T> extends Node<T> {
     return 1 + Math.max(left, right);
   }
 
+  //Recursivo
+  public void updateFEH(){
+    setFE(updateFEHe(this));
+  }
+  private int updateFEHe(NodeAVL<T> node){
+    if(node == null){
+      return 0;
+    }
+    int left = updateFEHe(node.getLeft());
+    int right = updateFEHe(node.getRight());
+    node.setFE(right - left);
+    return 1 + Math.max(left, right);
+  }
+
   public void setLeft(NodeAVL<T> left) {
     super.setLeft(left);
   }
