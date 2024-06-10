@@ -40,5 +40,8 @@ public class NodeAVL<T> extends Node<T> {
   public String toString() {
     return "[data:" + this.getData()+", fe:" + this.fe + "]";
   }
+  public String printNode(){
+    return "{left:"+ this.getLeft()+",data:" + this.getData()+" ,right:" + this.getRight()+", fe:" + this.fe +"}";
+  }
   
 }

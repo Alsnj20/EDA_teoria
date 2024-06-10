@@ -1,14 +1,17 @@
 package AVL;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import BST.ItemDuplicated;
 import BST.Node;
 
 public class AVL<T extends Comparable<T>> {
   protected NodeAVL<T> root;
-  public AVL(){
+
+  public AVL() {
     this.root = null;
   }
 
@@ -16,7 +19,7 @@ public class AVL<T extends Comparable<T>> {
     this.root = insertNode(x, this.root);
   }
 
-  protected NodeAVL<T> insertNode(T x, NodeAVL<T> actual) throws ItemDuplicated{
+  protected NodeAVL<T> insertNode(T x, NodeAVL<T> actual) throws ItemDuplicated {
     NodeAVL<T> res = actual;
     if (actual == null) {
       res = new NodeAVL<T>(x);
@@ -30,22 +33,52 @@ public class AVL<T extends Comparable<T>> {
       else
         res.setLeft(insertNode(x, actual.getLeft()));
       // actualizamos el factor de equilibrio
-      res.setFE(res.getFE() + (resC < 0 ? -1 : 1));
-      // balanceamos el arbol
+      res.setFE(res.getFE() + (resC < 0 ? 1 : -1));
+      // balanceamos el arbol}
+      System.out.println("RES: " + res);
+      System.out.println("RES.FE: " + res.getFE());
       balance(res);
     }
     return res;
   }
 
-  protected void balance(NodeAVL<T> node){
+  public void printListTree() {
+    List<NodeAVL<T>> nodeList = new ArrayList<>();
+    Queue<NodeAVL<T>> queue = new LinkedList<>();
+    if (this.root != null) {
+      queue.add(root);
+    }
+    while (!queue.isEmpty()) {
+      NodeAVL<T> node = queue.poll();
+      nodeList.add(node);
+      if (node.getLeft() != null) {
+        queue.add(node.getLeft());
+      }
+      if (node.getRight() != null) {
+        queue.add(node.getRight());
+      }
+    }
+
+    // Formatte
+    System.out.println("Nodes in list format:");
+    for (NodeAVL<T> node : nodeList) {
+      if (node != null) {
+        System.out.println(node.printNode());
+      } else {
+        System.out.println("null");
+      }
+    }
+  }
+
+  protected void balance(NodeAVL<T> node) {
     if (node.getFE() == -2) {
-      if (node.getLeft().getFE() == -1) {
+      if (node.getLeft().getFE() == 1) {
         node = rotateSR(node);
       } else {
         node = rotateDR(node);
       }
     } else if (node.getFE() == 2) {
-      if (node.getRight().getFE() == 1) {
+      if (node.getRight().getFE() == -1) {
         node = rotateSL(node);
       } else {
         node = rotateDL(node);
@@ -72,7 +105,7 @@ public class AVL<T extends Comparable<T>> {
       if (node.getRight() == null) {
         return node.getLeft();
       }
-      T min = null; //findMin(node.getRight());
+      T min = null; // findMin(node.getRight());
       node.setData(min);
       node.setRight(remove(node.getRight(), min));
     } else if (res < 0) {
@@ -81,33 +114,31 @@ public class AVL<T extends Comparable<T>> {
       node.setLeft(remove(node.getLeft(), data));
     }
     return node;
-  } 
+  }
 
-
-  protected NodeAVL<T> rotateSR(NodeAVL<T> node){
+  protected NodeAVL<T> rotateSR(NodeAVL<T> node) {
     NodeAVL<T> h = node.getLeft();
     node.setLeft(h.getRight());
     node = h;
     return node;
   }
 
-  protected NodeAVL<T> rotateSL(NodeAVL<T> node){
+  protected NodeAVL<T> rotateSL(NodeAVL<T> node) {
     NodeAVL<T> h = node.getRight();
     node.setRight(h.getLeft());
     node = h;
     return node;
   }
 
-  protected NodeAVL<T> rotateDR(NodeAVL<T> node){
+  protected NodeAVL<T> rotateDR(NodeAVL<T> node) {
     NodeAVL<T> h = node.getLeft();
     node.setLeft(rotateSL(h));
     node = rotateSR(node);
     return node;
 
-
   }
 
-  protected NodeAVL<T> rotateDL(NodeAVL<T> node){
+  protected NodeAVL<T> rotateDL(NodeAVL<T> node) {
     NodeAVL<T> h = node.getRight();
     node.setRight(rotateSR(h));
     node = rotateSL(node);
@@ -223,20 +254,6 @@ public class AVL<T extends Comparable<T>> {
       System.out.println();
 
       perPiece /= 2;
-    }
-  }
-
-  public static void main(String[] args) {
-    AVL<Integer> avl = new AVL<>();
-    try {
-      avl.insert(10);
-      avl.insert(5);
-      /*avl.insert(15);
-      avl.insert(3);
-      avl.insert(4);*/
-      avl.printTree();
-    } catch (Exception e) {
-      e.printStackTrace();
     }
   }
 }
