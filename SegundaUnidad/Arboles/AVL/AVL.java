@@ -1,12 +1,10 @@
 package AVL;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
 import BST.ItemDuplicated;
-import BST.Node;
 
 public class AVL<T extends Comparable<T>> {
   protected NodeAVL<T> root;
@@ -33,7 +31,7 @@ public class AVL<T extends Comparable<T>> {
       else
         res.setLeft(insertNode(x, actual.getLeft()));
         
-      // actualizamos el factor de equilibrio
+      // actualizamos el FE
       res.updateFE();
     }
     return balance(res);
@@ -54,34 +52,6 @@ public class AVL<T extends Comparable<T>> {
       }
     }
     return node;
-  }
-
-  public void printListTree() {
-    List<NodeAVL<T>> nodeList = new ArrayList<>();
-    Queue<NodeAVL<T>> queue = new LinkedList<>();
-    if (this.root != null) {
-      queue.add(root);
-    }
-    while (!queue.isEmpty()) {
-      NodeAVL<T> node = queue.poll();
-      nodeList.add(node);
-      if (node.getLeft() != null) {
-        queue.add(node.getLeft());
-      }
-      if (node.getRight() != null) {
-        queue.add(node.getRight());
-      }
-    }
-
-    // Formatte
-    System.out.println("Nodes in list format:");
-    for (NodeAVL<T> node : nodeList) {
-      if (node != null) {
-        System.out.println(node.printNode());
-      } else {
-        System.out.println("null");
-      }
-    }
   }
 
   public void remove(T data) {
@@ -143,6 +113,34 @@ public class AVL<T extends Comparable<T>> {
     NodeAVL<T> h = node.getRight();
     node.setRight(rotateSR(h));
     return rotateSL(node);
+  }
+
+  public void printListTree() {
+    List<NodeAVL<T>> nodeList = new ArrayList<>();
+    Queue<NodeAVL<T>> queue = new LinkedList<>();
+    if (this.root != null) {
+      queue.add(root);
+    }
+    while (!queue.isEmpty()) {
+      NodeAVL<T> node = queue.poll();
+      nodeList.add(node);
+      if (node.getLeft() != null) {
+        queue.add(node.getLeft());
+      }
+      if (node.getRight() != null) {
+        queue.add(node.getRight());
+      }
+    }
+
+    // Formatte
+    System.out.println("Nodes in list format:");
+    for (NodeAVL<T> node : nodeList) {
+      if (node != null) {
+        System.out.println(node.printNode());
+      } else {
+        System.out.println("null");
+      }
+    }
   }
 
   public void printTree() {
