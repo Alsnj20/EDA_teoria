@@ -1,4 +1,4 @@
-package Arboles;
+package BST;
 
 public class ItemNotFound extends Exception{
   public ItemNotFound(String msg){

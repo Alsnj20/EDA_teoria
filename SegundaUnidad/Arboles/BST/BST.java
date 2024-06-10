@@ -1,4 +1,4 @@
-package Arboles;
+package BST;
 
 import java.util.ArrayList;
 import java.util.List;

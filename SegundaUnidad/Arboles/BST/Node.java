@@ -1,4 +1,4 @@
-package Arboles;
+package BST;
 
 public class Node<E> {
   private E data;
