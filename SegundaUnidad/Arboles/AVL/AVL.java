@@ -19,20 +19,31 @@ public class AVL<T extends Comparable<T>> {
 
   protected NodeAVL<T> rotateSR(NodeAVL<T> node){
     NodeAVL<T> h = node.getLeft();
+    node.setLeft(h.getRight());
+    node = h;
+    return node;
+  }
+
+  protected NodeAVL<T> rotateSL(NodeAVL<T> node){
+    NodeAVL<T> h = node.getRight();
+    node.setRight(h.getLeft());
+    node = h;
+    return node;
+  }
+
+  protected NodeAVL<T> rotateDR(NodeAVL<T> node){
+    NodeAVL<T> h = node.getLeft();
+    node.setLeft(rotateSL(h));
+    node = rotateSR(node);
+    return node;
+
 
   }
 
-  protected NodeAVL<T> rotateSL(){
-
+  protected NodeAVL<T> rotateDL(NodeAVL<T> node){
+    NodeAVL<T> h = node.getRight();
+    node.setRight(rotateSR(h));
+    node = rotateSL(node);
+    return node;
   }
-
-  protected NodeAVL<T> rotateDR(){
-
-  }
-
-  protected NodeAVL<T> rotateDL(){
-
-  }
-
-  
 }
