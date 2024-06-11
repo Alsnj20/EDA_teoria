@@ -5,10 +5,10 @@ import java.util.*;
 import BST.ItemDuplicated;
 
 
-public class AVL<T extends Comparable<T>> {
+public class TreeAVL<T extends Comparable<T>> {
   protected NodeAVL<T> root;
 
-  public AVL() {
+  public TreeAVL() {
     this.root = null;
   }
 
