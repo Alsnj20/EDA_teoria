@@ -3,11 +3,11 @@ package BST;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BST<T extends Comparable<T>> {
+public class BSTree<T extends Comparable<T>> {
   private Node<T> root;
 
   // Constructores de un BST vacio
-  public BST() {
+  public BSTree() {
     this.root = null;
   }
 
@@ -305,7 +305,7 @@ public class BST<T extends Comparable<T>> {
   }
 
   public static void main(String[] args) {
-    BST<Integer> arbol = new BST<Integer>();
+    BSTree<Integer> arbol = new BSTree<Integer>();
     try {
       arbol.insert(18);
       arbol.insert(10);
