@@ -11,11 +11,10 @@ public class TestAVL {
       avl.printTree();
       avl.insert(12);
       avl.printTree();
-      avl.insert(4);
-      avl.printTree();
-      avl.insert(7);
-      avl.printTree();
       avl.insert(17);
+      avl.printTree();
+      System.out.println("Eliminando el 3");
+      avl.remove(3);
       avl.printTree();
     } catch (Exception e) {
       e.printStackTrace();

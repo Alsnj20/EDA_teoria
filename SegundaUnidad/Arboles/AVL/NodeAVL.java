@@ -1,21 +1,20 @@
 package AVL;
-
 import BST.Node;
 
 public class NodeAVL<T> extends Node<T> {
-  private int fe;
+  private int height;
 
-  public NodeAVL(T data, NodeAVL<T> left, NodeAVL<T> right) {
+  public NodeAVL(T data, NodeAVL<T> left, NodeAVL<T> right, int height) {
     super(data, left, right);
-    this.fe = 0;
+    this.height = height;
+  }
+
+  public NodeAVL(T data, int height) {
+    this(data, null, null, height);
   }
 
   public NodeAVL(T data) {
-    this(data, null, null);
-  }
-
-  public int getFE() {
-    return this.fe;
+    this(data, null, null, 1);
   }
 
   public NodeAVL<T> getLeft() {
@@ -26,36 +25,30 @@ public class NodeAVL<T> extends Node<T> {
     return (NodeAVL<T>) super.getRight();
   }
 
-  private void setFE(int fe) {
-    this.fe = fe;
+  public int getHeight() {
+    return height;
   }
 
-  public void updateFE() {
-    if (this != null) {
-      int left = this.getLeft() == null ? 0 : this.getLeft().height();
-      int right = this.getRight() == null ? 0 : this.getRight().height();
-      this.setFE(right - left);
-    }
+  public void setHeight(int height) {
+    this.height = height;
   }
 
-  private int height() {
-    int left = this.getLeft() == null ? 0 : this.getLeft().height();
-    int right = this.getRight() == null ? 0 : this.getRight().height();
-    return 1 + Math.max(left, right);
+  public int getRightHeight() {
+    NodeAVL<T> right = this.getRight();
+    return right != null ? right.getHeight() : 0;
   }
 
-  //Recursivo
-  public void updateFEH(){
-    setFE(updateFEHe(this));
+  public int getLeftHeight() {
+    NodeAVL<T> left = this.getLeft();
+    return left != null ? left.getHeight() : 0;
   }
-  private int updateFEHe(NodeAVL<T> node){
-    if(node == null){
-      return 0;
-    }
-    int left = updateFEHe(node.getLeft());
-    int right = updateFEHe(node.getRight());
-    node.setFE(right - left);
-    return 1 + Math.max(left, right);
+
+  public int getFE() {
+    return this.getRightHeight() - this.getLeftHeight();
+  }
+
+  public void updateHeight() {
+    this.setHeight(Math.max(this.getLeftHeight(), this.getRightHeight()) + 1);
   }
 
   public void setLeft(NodeAVL<T> left) {
@@ -67,11 +60,11 @@ public class NodeAVL<T> extends Node<T> {
   }
 
   public String toString() {
-    return "[data:" + this.getData() + ", fe:" + this.fe + "]";
+    return "[data:" + this.getData() + ", FE:" + this.getFE() + "]";
   }
 
   public String printNode() {
-    return "{left:" + this.getLeft() + ",data:" + this.getData() + " ,right:" + this.getRight() + ", fe:" + this.fe
+    return "{left:" + this.getLeft() + ",data:" + this.getData() + " ,right:" + this.getRight() + ", fe:" + this.getFE()
         + "}";
   }
 }

@@ -1,10 +1,9 @@
 package AVL;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+
+import java.util.*;
 
 import BST.ItemDuplicated;
+import BST.ItemNotFound;
 
 public class AVL<T extends Comparable<T>> {
   protected NodeAVL<T> root;
@@ -30,14 +29,14 @@ public class AVL<T extends Comparable<T>> {
         res.setRight((insertNode(x, actual.getRight())));
       else
         res.setLeft(insertNode(x, actual.getLeft()));
-        
+
       // actualizamos el FE
       res.updateFE();
     }
-    return balance(res);
+    return balanceInsert(res);
   }
 
-  protected NodeAVL<T> balance(NodeAVL<T> node) {
+  protected NodeAVL<T> balanceInsert(NodeAVL<T> node) {
     if (node.getFE() == -2) {
       if (node.getLeft().getFE() == -1) {
         return rotateSR(node);
@@ -54,37 +53,69 @@ public class AVL<T extends Comparable<T>> {
     return node;
   }
 
-  public void remove(T data) {
-    this.root = remove(this.root, data);
+  public void remove(T x) throws ItemNotFound {
+    this.root = removeNode(x, this.root);
   }
 
-  protected NodeAVL<T> remove(NodeAVL<T> node, T data) {
-    if (node == null) {
-      return null;
-    }
-    int res = node.getData().compareTo(data);
-    if (res == 0) {
-      if (node.getLeft() == null && node.getRight() == null) {
-        return null;
-      }
-      if (node.getLeft() == null) {
-        return node.getRight();
-      }
-      if (node.getRight() == null) {
-        return node.getLeft();
-      }
-      T min = null; // findMin(node.getRight());
-      node.setData(min);
-      node.setRight(remove(node.getRight(), min));
-    } else if (res < 0) {
-      node.setRight(remove(node.getRight(), data));
+  public NodeAVL<T> removeNode(T x, NodeAVL<T> actual) throws ItemNotFound {
+    NodeAVL<T> res = actual;
+    if (actual == null) {
+      throw new ItemNotFound(x + "no esta");
     } else {
-      node.setLeft(remove(node.getLeft(), data));
+      int resC = actual.getData().compareTo(x);
+      if (resC < 0) {
+        res.setRight(removeNode(x, actual.getRight()));
+      } else if (resC > 0) {
+        res.setLeft(removeNode(x, actual.getLeft()));
+      } else if (actual.getLeft() != null && actual.getRight() != null) {// dos hijos
+        actual.setData(minRemove2());
+        res = actual;
+      } else { // 1 hijo o ninguno
+        res = (actual.getLeft() != null) ? actual.getLeft() : actual.getRight();
+      }
+      res.updateFE();
+      /*return balanceRemove(res);*/
+      return res;
+    }
+  }
+
+  public NodeAVL<T> balanceRemove(NodeAVL<T> node) {
+    if (node.getFE() == -2) {
+      int feLeft = node.getLeft().getFE();
+      if (feLeft == 1 || feLeft == 0) {
+        return rotateSR(node);
+      } else {
+        return rotateDR(node);
+      }
+    } else if (node.getFE() == 2) {
+      int feRight = node.getRight().getFE();
+      if (feRight == -1 || feRight == 0) {
+        return rotateSL(node);
+      } else {
+        return rotateDL(node);
+      }
     }
     return node;
   }
 
-  //Rotaciones
+  //Reciclado de código
+  public T minRemove2() {
+    NodeAVL<T> minNode = new NodeAVL<T>(null);
+    this.root = minRemove(this.root, minNode);
+    return minNode.getData();
+  }
+
+  protected NodeAVL<T> minRemove(NodeAVL<T> actual, NodeAVL<T> minNode) {
+    if (actual.getLeft() != null) {
+      actual.setLeft(minRemove(actual.getLeft(), minNode));
+    } else {
+      minNode.setData(actual.getData());
+      actual = actual.getRight();
+    }
+    return actual;
+  }
+
+  // Rotaciones
   protected NodeAVL<T> rotateSR(NodeAVL<T> node) {
     NodeAVL<T> h = node.getLeft();
     node.setLeft(h.getRight());
@@ -113,34 +144,6 @@ public class AVL<T extends Comparable<T>> {
     NodeAVL<T> h = node.getRight();
     node.setRight(rotateSR(h));
     return rotateSL(node);
-  }
-
-  public void printListTree() {
-    List<NodeAVL<T>> nodeList = new ArrayList<>();
-    Queue<NodeAVL<T>> queue = new LinkedList<>();
-    if (this.root != null) {
-      queue.add(root);
-    }
-    while (!queue.isEmpty()) {
-      NodeAVL<T> node = queue.poll();
-      nodeList.add(node);
-      if (node.getLeft() != null) {
-        queue.add(node.getLeft());
-      }
-      if (node.getRight() != null) {
-        queue.add(node.getRight());
-      }
-    }
-
-    // Formatte
-    System.out.println("Nodes in list format:");
-    for (NodeAVL<T> node : nodeList) {
-      if (node != null) {
-        System.out.println(node.printNode());
-      } else {
-        System.out.println("null");
-      }
-    }
   }
 
   public void printTree() {
