@@ -3,7 +3,7 @@ package AVL;
 import java.util.*;
 
 import BST.ItemDuplicated;
-import BST.ItemNotFound;
+
 
 public class AVL<T extends Comparable<T>> {
   protected NodeAVL<T> root;
@@ -29,90 +29,65 @@ public class AVL<T extends Comparable<T>> {
         res.setRight((insertNode(x, actual.getRight())));
       else
         res.setLeft(insertNode(x, actual.getLeft()));
-
-      // actualizamos el FE
-      res.updateFE();
+      res.updateHeight();
     }
-    return balanceInsert(res);
+    return balance(res);
   }
 
-  protected NodeAVL<T> balanceInsert(NodeAVL<T> node) {
-    if (node.getFE() == -2) {
-      if (node.getLeft().getFE() == -1) {
+  protected NodeAVL<T> balance(NodeAVL<T> node) {
+    int nodeFE = node.getFE();
+    if (nodeFE == -2) {
+      int leftFE = node.getLeft().getFE();
+      if (leftFE == -1 || leftFE == 0) {
         return rotateSR(node);
-      } else {
+      } else if (leftFE == 1) {
         return rotateDR(node);
       }
-    } else if (node.getFE() == 2) {
-      if (node.getRight().getFE() == 1) {
+    } else if (nodeFE == 2) {
+      int rightFE = node.getRight().getFE();
+      if (rightFE == 1 || rightFE == 0) {
         return rotateSL(node);
-      } else {
+      } else if (rightFE == -1) {
         return rotateDL(node);
       }
     }
     return node;
   }
 
-  public void remove(T x) throws ItemNotFound {
-    this.root = removeNode(x, this.root);
+  public void remove(T data) {
+    this.root = remove(this.root, data);
   }
 
-  public NodeAVL<T> removeNode(T x, NodeAVL<T> actual) throws ItemNotFound {
-    NodeAVL<T> res = actual;
-    if (actual == null) {
-      throw new ItemNotFound(x + "no esta");
-    } else {
-      int resC = actual.getData().compareTo(x);
-      if (resC < 0) {
-        res.setRight(removeNode(x, actual.getRight()));
-      } else if (resC > 0) {
-        res.setLeft(removeNode(x, actual.getLeft()));
-      } else if (actual.getLeft() != null && actual.getRight() != null) {// dos hijos
-        actual.setData(minRemove2());
-        res = actual;
-      } else { // 1 hijo o ninguno
-        res = (actual.getLeft() != null) ? actual.getLeft() : actual.getRight();
-      }
-      res.updateFE();
-      /*return balanceRemove(res);*/
-      return res;
+  protected NodeAVL<T> remove(NodeAVL<T> node, T data) {
+    if (node == null) {
+      return null;
     }
-  }
-
-  public NodeAVL<T> balanceRemove(NodeAVL<T> node) {
-    if (node.getFE() == -2) {
-      int feLeft = node.getLeft().getFE();
-      if (feLeft == 1 || feLeft == 0) {
-        return rotateSR(node);
+    int res = node.getData().compareTo(data);
+    if (res == 0) {
+      if (node.getLeft() != null && node.getRight() != null) {
+        NodeAVL<T> minNode = new NodeAVL<T>(null);
+        node.setRight(minRemove(node.getRight(), minNode));
+        node.setData(minNode.getData());
       } else {
-        return rotateDR(node);
+        node = node.getRight() != null ? node.getRight() : node.getLeft();
       }
-    } else if (node.getFE() == 2) {
-      int feRight = node.getRight().getFE();
-      if (feRight == -1 || feRight == 0) {
-        return rotateSL(node);
-      } else {
-        return rotateDL(node);
-      }
-    }
-    return node;
-  }
-
-  //Reciclado de código
-  public T minRemove2() {
-    NodeAVL<T> minNode = new NodeAVL<T>(null);
-    this.root = minRemove(this.root, minNode);
-    return minNode.getData();
-  }
-
-  protected NodeAVL<T> minRemove(NodeAVL<T> actual, NodeAVL<T> minNode) {
-    if (actual.getLeft() != null) {
-      actual.setLeft(minRemove(actual.getLeft(), minNode));
+      return node;
+    } else if (res < 0) {
+      node.setRight(remove(node.getRight(), data));
     } else {
-      minNode.setData(actual.getData());
-      actual = actual.getRight();
+      node.setLeft(remove(node.getLeft(), data));
     }
-    return actual;
+    node.updateHeight();
+    return balance(node);
+  }
+
+  protected NodeAVL<T> minRemove(NodeAVL<T> node, NodeAVL<T> minNode) {
+    if (node.getLeft() != null) {
+      node.setLeft(minRemove(node.getLeft(), minNode));
+      return node;
+    }
+    minNode.setData(node.getData());
+    return node.getRight();
   }
 
   // Rotaciones
@@ -120,8 +95,7 @@ public class AVL<T extends Comparable<T>> {
     NodeAVL<T> h = node.getLeft();
     node.setLeft(h.getRight());
     h.setRight(node);
-    node.updateFE();
-    h.updateFE();
+    node.updateHeight();
     return h;
   }
 
@@ -129,8 +103,7 @@ public class AVL<T extends Comparable<T>> {
     NodeAVL<T> h = node.getRight();
     node.setRight(h.getLeft());
     h.setLeft(node);
-    node.updateFE();
-    h.updateFE();
+    node.updateHeight();
     return h;
   }
 
@@ -144,6 +117,34 @@ public class AVL<T extends Comparable<T>> {
     NodeAVL<T> h = node.getRight();
     node.setRight(rotateSR(h));
     return rotateSL(node);
+  }
+
+  public void printListTree() {
+    List<NodeAVL<T>> nodeList = new ArrayList<>();
+    Queue<NodeAVL<T>> queue = new LinkedList<>();
+    if (this.root != null) {
+      queue.add(root);
+    }
+    while (!queue.isEmpty()) {
+      NodeAVL<T> node = queue.poll();
+      nodeList.add(node);
+      if (node.getLeft() != null) {
+        queue.add(node.getLeft());
+      }
+      if (node.getRight() != null) {
+        queue.add(node.getRight());
+      }
+    }
+
+    // Formatte
+    System.out.println("Nodes in list format:");
+    for (NodeAVL<T> node : nodeList) {
+      if (node != null) {
+        System.out.println(node.printNode());
+      } else {
+        System.out.println("null");
+      }
+    }
   }
 
   public void printTree() {
