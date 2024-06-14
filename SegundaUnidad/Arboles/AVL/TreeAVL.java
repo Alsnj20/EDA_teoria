@@ -3,9 +3,15 @@ package AVL;
 import java.util.*;
 
 import BST.ItemDuplicated;
+import BST.Node;
 
 
 public class TreeAVL<T extends Comparable<T>> {
+  class NodeAVL2 extends Node<T>{
+    public NodeAVL2(T data) {
+      super(data);
+    }
+  }
   protected NodeAVL<T> root;
 
   public TreeAVL() {
@@ -41,14 +47,14 @@ public class TreeAVL<T extends Comparable<T>> {
       if (leftFE == -1 || leftFE == 0) {
         return rotateSR(node);
       } else if (leftFE == 1) {
-        return rotateDR(node);
+        return rotateDRL(node);
       }
     } else if (nodeFE == 2) {
       int rightFE = node.getRight().getFE();
       if (rightFE == 1 || rightFE == 0) {
         return rotateSL(node);
       } else if (rightFE == -1) {
-        return rotateDL(node);
+        return rotateDLR(node);
       }
     }
     return node;
@@ -90,6 +96,24 @@ public class TreeAVL<T extends Comparable<T>> {
     return node.getRight();
   }
 
+  //Search
+  public T search(T data) {
+    return search(this.root, data);
+  }
+  protected T search(NodeAVL<T> node, T data) {
+    if (node == null) {
+      return null;
+    }
+    int res = node.getData().compareTo(data);
+    if(res == 0)
+      return node.getData();
+    if(res > 0){
+      return search(node.getLeft(), data);
+    }else{
+      return search(node.getRight(), data);
+    }
+  }
+
   // Rotaciones
   protected NodeAVL<T> rotateSR(NodeAVL<T> node) {
     NodeAVL<T> h = node.getLeft();
@@ -107,13 +131,13 @@ public class TreeAVL<T extends Comparable<T>> {
     return h;
   }
 
-  protected NodeAVL<T> rotateDR(NodeAVL<T> node) {
+  protected NodeAVL<T> rotateDRL(NodeAVL<T> node) {
     NodeAVL<T> h = node.getLeft();
     node.setLeft(rotateSL(h));
     return rotateSR(node);
   }
 
-  protected NodeAVL<T> rotateDL(NodeAVL<T> node) {
+  protected NodeAVL<T> rotateDLR(NodeAVL<T> node) {
     NodeAVL<T> h = node.getRight();
     node.setRight(rotateSR(h));
     return rotateSL(node);
