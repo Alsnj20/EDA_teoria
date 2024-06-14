@@ -1,4 +1,4 @@
-package EjercicioR1.Tienda.listDoubleCircular;
+package EjercicioR1.Tienda;
 
 public class Producto {
   private String code;
@@ -66,7 +66,7 @@ public class Producto {
     this.price = price;
   }
 
-  public boolean isEsSuficiente() {
+  public boolean esSuficiente() {
     return esSuficiente;
   }
 
@@ -77,6 +77,10 @@ public class Producto {
   /*COMPRANDO*/
   public void increaseStock(){
     this.stock++;
+  }
+
+  public boolean equals(Producto p){
+    return this.code == p.code;
   }
 
   /*VENDIENDO*/

@@ -1,7 +1,7 @@
 package EjercicioR1.listDouble;
 
 import EjercicioR1.Interfaces.TDAList;
-import EjercicioR1.listSimple.Node;
+import EjercicioR1.listDouble.NodeDouble;
 
 //Lista ordenada doblemente enlazada
 public class LinkedDoubleList<T extends Comparable<T>> implements TDAList<T> {
@@ -80,7 +80,7 @@ public class LinkedDoubleList<T extends Comparable<T>> implements TDAList<T> {
 
   //Buscar
   public boolean contains(T data) {
-    Node<T> aux = this.first;
+    NodeDouble<T> aux = this.first;
     while (aux != null && aux.getData().compareTo(data) < 0) {
       aux = aux.getNext();
     }
@@ -89,7 +89,7 @@ public class LinkedDoubleList<T extends Comparable<T>> implements TDAList<T> {
 
   public int indexOf(T data) {
     int pos = 0;
-    Node<T> aux = this.first;
+    NodeDouble<T> aux = this.first;
     while (aux != null && aux.getData().compareTo(data) < 0) {
       aux = aux.getNext();
       pos++;
@@ -101,7 +101,7 @@ public class LinkedDoubleList<T extends Comparable<T>> implements TDAList<T> {
     if (index < 0 || index >= count) {
       return null;
     } else {
-      Node<T> aux = this.first;
+      NodeDouble<T> aux = this.first;
       for (int i = 0; i < index; i++) {
         aux = aux.getNext();
       }
@@ -114,7 +114,7 @@ public class LinkedDoubleList<T extends Comparable<T>> implements TDAList<T> {
     if (n == -1) {
       return null;
     } else {
-      Node<T> aux = this.first;
+      NodeDouble<T> aux = this.first;
       for (int i = 0; i < n; i++) {
         aux = aux.getNext();
       }

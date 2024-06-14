@@ -2,7 +2,8 @@ package EjercicioR1.Tienda.listDoubleCircular;
 
 import EjercicioR1.Interfaces.TDAList;
 import EjercicioR1.listDouble.NodeDouble;
-public class LinkedDoubleCircularList<T extends Comparable<T>> implements TDAList<T> {
+import EjercicioR1.listSimple.Node;
+public class LinkedDoubleCircularList<T> implements TDAList<T> {
   private NodeDouble<T> first;
   private NodeDouble<T> last;
   private int count;
@@ -24,7 +25,6 @@ public class LinkedDoubleCircularList<T extends Comparable<T>> implements TDALis
       while (aux.getNext() != this.first) {
         aux = aux.getNext();
       }
-      System.out.println("Actual" + aux.printNode());
       aux.setNext(node);
       this.last = node;
       node.setBack(aux);
@@ -86,16 +86,51 @@ public class LinkedDoubleCircularList<T extends Comparable<T>> implements TDALis
   public boolean isEmpty() {
     return this.first == null && this.last == null && this.count == 0;
   }
-
-  public int indexOf(T data) {
-    int pos = 0;
+  /*Search*/
+  public boolean contains(T data) {
     NodeDouble<T> aux = this.first;
-    while (aux.getNext() != this.first && !aux.getData().equals(data)) {
+    while (aux != this.first && aux.getData().equals(data)) {
       aux = aux.getNext();
-      pos++;
     }
-    System.out.println(aux.printNode());
-    return (aux.getData().equals(data)) ? pos : -1;
+    return (aux.getData().equals(data));
+  }
+  public int indexOf(T data) {
+    if(isEmpty()){
+      return -1;
+    }else{
+      NodeDouble<T> aux = this.first;
+      int pos = 0;
+      while (aux != this.first && !aux.getData().equals(data)) {
+        aux = aux.getNext();
+        pos++;
+      }
+      return (aux.getData().equals(data)) ? pos : -1;
+    }
+  }
+  
+  public T get(int index) {
+    if (index < 0 || index >= count) {
+      return null;
+    } else {
+      NodeDouble<T> aux = this.first;
+      for (int i = 0; i < index; i++) {
+        aux = aux.getNext();
+      }
+      return aux.getData();
+    }
+  }
+
+  public T find(T data) {
+    int n = indexOf(data);
+    if (n == -1) {
+      return null;
+    } else {
+      NodeDouble<T> aux = this.first;
+      for (int i = 0; i < n; i++) {
+        aux = aux.getNext();
+      }
+      return aux.getData();
+    }
   }
 
   public String toString() {
