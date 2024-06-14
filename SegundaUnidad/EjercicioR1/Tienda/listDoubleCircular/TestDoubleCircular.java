@@ -1,4 +1,4 @@
-package EjercicioR1.listDoubleCircular;
+package EjercicioR1.Tienda.listDoubleCircular;
 
 public class TestDoubleCircular {
   public static void main(String[] args) {
@@ -15,5 +15,7 @@ public class TestDoubleCircular {
     System.out.println(listDC);
     listDC.remove(6);
     System.out.println(listDC);
+    System.out.println(listDC.indexOf(5));
+    System.out.println(listDC.indexOf(0));
   }
 }
