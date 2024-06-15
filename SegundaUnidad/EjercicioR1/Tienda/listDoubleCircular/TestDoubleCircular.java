@@ -17,5 +17,6 @@ public class TestDoubleCircular {
     System.out.println(listDC);
     System.out.println(listDC.indexOf(5));
     System.out.println(listDC.indexOf(0));
+    
   }
 }

@@ -1,4 +1,6 @@
 package DICT;
+import java.util.ArrayList;
+
 import BST.BSTree;
 import BST.ItemDuplicated;
 import BST.ItemNotFound;
@@ -29,8 +31,12 @@ public class DictionaryBST<K extends Comparable<K>, V> implements Dictionary<K,V
     return this.bst.toString();
   }
 
+  public ArrayList<EntryDict<K,V>> toArrayList(){
+    return this.bst.toArrayList();
+  }
+
   public void printDict(){
-    this.bst.printTree();
+    System.out.println(this.bst.inOrder());
   }
 }
   

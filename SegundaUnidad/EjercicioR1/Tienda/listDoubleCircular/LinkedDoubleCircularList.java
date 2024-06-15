@@ -1,9 +1,11 @@
 package EjercicioR1.Tienda.listDoubleCircular;
 
+import java.util.ArrayList;
+
 import EjercicioR1.Interfaces.TDAList;
 import EjercicioR1.listDouble.NodeDouble;
-import EjercicioR1.listSimple.Node;
-public class LinkedDoubleCircularList<T> implements TDAList<T> {
+
+public class LinkedDoubleCircularList<T> implements TDAList<T>{
   private NodeDouble<T> first;
   private NodeDouble<T> last;
   private int count;
@@ -86,7 +88,8 @@ public class LinkedDoubleCircularList<T> implements TDAList<T> {
   public boolean isEmpty() {
     return this.first == null && this.last == null && this.count == 0;
   }
-  /*Search*/
+
+  /* Search */
   public boolean contains(T data) {
     NodeDouble<T> aux = this.first;
     while (aux != this.first && aux.getData().equals(data)) {
@@ -94,10 +97,11 @@ public class LinkedDoubleCircularList<T> implements TDAList<T> {
     }
     return (aux.getData().equals(data));
   }
+
   public int indexOf(T data) {
-    if(isEmpty()){
+    if (isEmpty()) {
       return -1;
-    }else{
+    } else {
       NodeDouble<T> aux = this.first;
       int pos = 0;
       while (aux != this.first && !aux.getData().equals(data)) {
@@ -107,7 +111,7 @@ public class LinkedDoubleCircularList<T> implements TDAList<T> {
       return (aux.getData().equals(data)) ? pos : -1;
     }
   }
-  
+
   public T get(int index) {
     if (index < 0 || index >= count) {
       return null;
@@ -134,12 +138,32 @@ public class LinkedDoubleCircularList<T> implements TDAList<T> {
   }
 
   public String toString() {
-    String str = "";
-    NodeDouble<T> aux = this.first;
-    while (aux.getNext() != this.first) {
-      str += aux.printNode();
-      aux = aux.getNext();
+    if (!isEmpty()) {
+      String str = "";
+      NodeDouble<T> aux = this.first;
+      while (aux.getNext() != this.first) {
+        str += aux.printNode();
+        aux = aux.getNext();
+      }
+      return str + this.last.printNode();
     }
-    return str + this.last.printNode();
+    return null;
+  }
+
+  protected void toArrayList(ArrayList<T> arr) {
+    if (!isEmpty()) {
+      NodeDouble<T> aux = this.first;
+      while (aux.getNext() != this.first) {
+        arr.add(aux.getData());
+        aux = aux.getNext();
+      }
+      arr.add(this.last.getData());
+    }
+  }
+
+  public ArrayList<T> toArrayList(){
+    ArrayList<T> arr = new ArrayList<>();
+    toArrayList(arr);
+    return arr;
   }
 }

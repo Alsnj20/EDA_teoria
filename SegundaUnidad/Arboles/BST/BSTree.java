@@ -158,20 +158,26 @@ public class BSTree<T extends Comparable<T>> {
     return res;
   }
 
-  public String preOrder() {
+  /*public String preOrder() {
     if (this.root != null)
       return preOrder(this.root);
     return "*";
+  }*/
+
+  protected void preOrder(Node<T> actual, ArrayList<T> list) {
+    list.add(actual.getData());
+    if (actual.getLeft() != null)
+      preOrder(actual.getLeft(), list);
+    if (actual.getRight() != null)
+      preOrder(actual.getRight(), list);
   }
 
-  protected String preOrder(Node<T> actual) {
-    String res = "";
-    res += actual.getData().toString() +" ";
-    if (actual.getLeft() != null)
-      res += preOrder(actual.getLeft());
-    if (actual.getRight() != null)
-      res += preOrder(actual.getRight());
-    return res;
+  public ArrayList<T> toArrayList(){
+    ArrayList<T> arr = new ArrayList<>();
+    if(!isEmpty()){
+      preOrder(root, arr);
+    }
+    return arr;
   }
 
   /*
@@ -313,7 +319,7 @@ public class BSTree<T extends Comparable<T>> {
       arbol.insert(5);
       arbol.insert(13);
       System.out.println("Recorrido en preorden");
-      System.out.println(arbol.preOrder());
+      //System.out.println(arbol.preOrder());
       System.out.println("Recorrido en inorden");
       System.out.println(arbol.inOrder());
       System.out.println("Recorrido en postorden");
