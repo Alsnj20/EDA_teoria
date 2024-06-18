@@ -1,6 +1,7 @@
 package Pilas;
 
-import List.Node;
+import Interfaces.Stack;
+import Utilidades.Node;
 
 public class StackList<T> implements Stack<T> {
   private Node<T> tope;

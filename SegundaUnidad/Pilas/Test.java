@@ -1,9 +1,7 @@
 package Pilas;
-
-
 public class Test {
   public static void main(String[] args) {
-    Stack<Character> st = new Pila<>(0);
+    StackArray<Character> st = new StackArray(0);
     try{
       st.push('a');
       st.push('b');

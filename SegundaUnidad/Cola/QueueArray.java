@@ -1,5 +1,6 @@
 package Cola;
 
+import Interfaces.Queue;
 import Pilas.ExceptionIsEmpty;
 
 public class QueueArray<T> implements Queue<T> {

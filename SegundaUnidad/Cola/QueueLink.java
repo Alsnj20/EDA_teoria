@@ -1,5 +1,6 @@
 package Cola;
-import List.Node;
+import Interfaces.Queue;
+import Utilidades.Node;
 import Pilas.ExceptionIsEmpty;
 
 public class QueueLink<T> implements Queue<T>{

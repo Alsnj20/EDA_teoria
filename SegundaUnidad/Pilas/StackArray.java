@@ -1,5 +1,7 @@
 package Pilas;
 
+import Interfaces.Stack;
+
 public class StackArray<T> implements Stack<T>{
   private int tope;
   private int size;
