@@ -34,6 +34,6 @@ public class Node<T> {
   }
 
   public String printNode() {
-    return "{VALUE:\n" + this.data.toString() +",NEXT:\n" + this.next + "}";
+    return "{VALUE:" + this.data.toString() +",NEXT:" + this.next + "}";
   }
 }
