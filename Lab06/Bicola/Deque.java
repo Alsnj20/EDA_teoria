@@ -1,4 +1,4 @@
-package Lab06.Bicola;
+package Bicola;
 public class Deque<T extends Comparable<T>> implements TDADeque<T>{
   private NodeDouble<T> last;
   private NodeDouble<T> first;

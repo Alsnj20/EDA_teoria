@@ -1,4 +1,4 @@
-package Interfaces;
+package ListLinked;
 public interface TDAList<T> { 
     void add(T x); 
     int indexOf(T x); 

@@ -5,5 +5,5 @@ public interface TDADeque<T> {
   public T removerFrente();
   public T removerFinal();
   public boolean estaVacia();
-  public int longitud();
+  public int tamano();
 }

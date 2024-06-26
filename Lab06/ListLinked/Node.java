@@ -1,4 +1,4 @@
-package Lab06.LinkedList;
+package ListLinked;
 
 public class Node<T> {
   private T data;

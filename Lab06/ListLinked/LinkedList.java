@@ -1,5 +1,4 @@
 package ListLinked;
-
 import java.util.ArrayList;
 
 public class LinkedList<T extends Comparable<T>> implements TDAList<T> {
@@ -146,6 +145,7 @@ public class LinkedList<T extends Comparable<T>> implements TDAList<T> {
     }
     order.add(list1);
     order.add(list2);
+    return order;
   }
 
   private void addsortList(T data){
@@ -173,16 +173,5 @@ public class LinkedList<T extends Comparable<T>> implements TDAList<T> {
       aux = aux.getNext();
     }
     return str;
-  }
-
-  public static void main(String[] args) {
-    LinkedList<Integer> list = new LinkedList<>();
-    list.add(1);
-    list.add(2);
-    list.add(3);
-    list.add(4);
-    list.add(5);
-    System.out.println(list.toString());
-    System.out.println(list.sort(3));
   }
 }
