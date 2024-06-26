@@ -1,7 +1,7 @@
 {
   "java.project.sourcePaths": [
-    "SegundaUnidad\\Arboles",
-    "SegundaUnidad"
+    "SegundaUnidad",
+    "Lab06/ListLinked"
   ],
   "java.project.referencedLibraries": []
 }

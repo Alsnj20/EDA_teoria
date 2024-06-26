@@ -1,6 +1,6 @@
 package Refuerzo;
 
-public class Test {
+public class TestLista {
   public static void main(String[] args) {
     ListaSimpleOrdenada<Integer> lista = new ListaSimpleOrdenada<>();
     lista.add(2);
