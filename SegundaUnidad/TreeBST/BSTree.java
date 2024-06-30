@@ -5,6 +5,7 @@ import java.util.List;
 
 import Exceptions.ItemDuplicated;
 import Exceptions.ItemNotFound;
+import Cola.QueueLink;
 
 public class BSTree<T extends Comparable<T>> {
   private NodeBST<T> root;
@@ -70,8 +71,10 @@ public class BSTree<T extends Comparable<T>> {
     else if (resC > 0)
       res.setLeft(removeNode(x, actual.getLeft()));
     else if (actual.getLeft() != null && actual.getRight() != null) {// dos hijos
-      /*res.setData(minRecover(actual.getRight()).getData());
-      res.setRight(minRemove(actual.getRight()));*/
+      /*
+       * res.setData(minRecover(actual.getRight()).getData());
+       * res.setRight(minRemove(actual.getRight()));
+       */
       T min = minRemove2();
       res.setData(min);
     } else { // 1 hijo o ninguno
@@ -142,7 +145,7 @@ public class BSTree<T extends Comparable<T>> {
       res += postOrder(actual.getLeft());
     if (actual.getRight() != null)
       res += postOrder(actual.getRight());
-    return res + actual.getData().toString() +" ";
+    return res + actual.getData().toString() + " ";
   }
 
   public String inOrder() {
@@ -155,17 +158,19 @@ public class BSTree<T extends Comparable<T>> {
     String res = "";
     if (actual.getLeft() != null)
       res += inOrder(actual.getLeft());
-    res += actual.getData().toString()+" ";
+    res += actual.getData().toString() + " ";
     if (actual.getRight() != null)
       res += inOrder(actual.getRight());
     return res;
   }
 
-  /*public String preOrder() {
-    if (this.root != null)
-      return preOrder(this.root);
-    return "*";
-  }*/
+  /*
+   * public String preOrder() {
+   * if (this.root != null)
+   * return preOrder(this.root);
+   * return "*";
+   * }
+   */
 
   protected void preOrder(NodeBST<T> actual, ArrayList<T> list) {
     list.add(actual.getData());
@@ -175,9 +180,9 @@ public class BSTree<T extends Comparable<T>> {
       preOrder(actual.getRight(), list);
   }
 
-  public ArrayList<T> toArrayList(){
+  public ArrayList<T> toArrayList() {
     ArrayList<T> arr = new ArrayList<>();
-    if(!isEmpty()){
+    if (!isEmpty()) {
       preOrder(root, arr);
     }
     return arr;
@@ -198,9 +203,11 @@ public class BSTree<T extends Comparable<T>> {
    * }
    */
 
-  /*public void printTree() {
-    printTree(this.root, 0);
-  }*/
+  /*
+   * public void printTree() {
+   * printTree(this.root, 0);
+   * }
+   */
 
   public void printTree() {
     List<List<String>> lines = new ArrayList<>();
@@ -311,5 +318,40 @@ public class BSTree<T extends Comparable<T>> {
 
       perPiece /= 2;
     }
+  }
+
+  public double calcularEMC() {
+    if (this.root == null)
+      return 0;
+    QueueLink<NodeBST<T>> queue = new QueueLink<>();
+    queue.enqueue(this.root);
+    ;
+
+    int totalNodos = 0;
+    int totalComparaciones = 0;
+    int nivel = 0;
+    System.out.println("Altura inicial" + queue.size());
+
+    while (!queue.isEmpty()) {
+      int nivelSize = queue.size();
+      nivel++;
+      System.out.println("Nivel: "+nivel);
+      for (int i = 0; i < nivelSize; i++) {
+        try {
+          System.out.println(queue);
+          NodeBST<T> temp = queue.dequeue();
+          totalNodos++;
+          totalComparaciones += nivel;
+
+          if (temp.getLeft() != null)
+            queue.enqueue(temp.getLeft());
+          if (temp.getRight() != null)
+            queue.enqueue(temp.getRight());
+        } catch (Exception e) {
+          System.out.println(e.getMessage());
+        }
+      }
+    }
+    return (double) totalComparaciones / totalNodos;
   }
 }

@@ -44,9 +44,11 @@ public class TestBST {
       System.out.println("Eliminando el 11");
       arbol.remove(11);
       System.out.println("Arbol");
-      arbol.printTree();
     } catch (Exception e) {
       System.out.println(e.getMessage());
+    } finally{
+      arbol.printTree();
+      System.out.println(arbol.calcularEMC());
     }
   }
 }

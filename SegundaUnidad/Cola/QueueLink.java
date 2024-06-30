@@ -4,6 +4,7 @@ import Utilidades.Node;
 import Pilas.ExceptionIsEmpty;
 
 public class QueueLink<T> implements Queue<T>{
+  private int count;
   private Node<T> first;
   private Node<T> last;
 
@@ -19,18 +20,19 @@ public class QueueLink<T> implements Queue<T>{
       this.last.setNext(node);
     }
     this.last = node;
+    count++;
   }
 
   public T dequeue() throws ExceptionIsEmpty{
     if(isEmpty()){
       throw new ExceptionIsEmpty("Queue is empty");
     }
+    T data = this.first.getData();
     this.first = this.first.getNext();
     if(this.first == null){
       this.last = null;
     }
-    T data = this.first.getData();
-    this.first = this.first.getNext();
+    this.count--;
     return data;
   }
 
@@ -50,6 +52,9 @@ public class QueueLink<T> implements Queue<T>{
 
   public boolean isEmpty(){
     return this.first == null;
+  }
+  public int size(){
+    return this.count;
   }
 
   public String toString(){
@@ -71,6 +76,8 @@ public class QueueLink<T> implements Queue<T>{
       System.out.println(q.toString());
       System.out.println(q.front());
       System.out.println(q.back());
+      System.out.println(q.dequeue());
+      System.out.println(q.dequeue());
       System.out.println(q.toString());
     }catch(Exception e){
       System.out.println(e.getMessage());
