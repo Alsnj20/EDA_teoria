@@ -8,10 +8,10 @@ public class NodeB<T extends Comparable<T>> {
   public NodeB(int count){
     this.keys = new ArrayList<>(count);
     this.childs = new ArrayList<>(count);
-    this.count = count;
+    this.count = 0;
     for (int i = 0; i < count; i++) {
       this.keys.add(null);
-      this.childs.add(null);    
+      this.childs.add(null);
     }
   }
 
@@ -20,7 +20,7 @@ public class NodeB<T extends Comparable<T>> {
   }
 
   public int getMinKeys(int orden){
-    return (int) Math.ceil(orden/2*1.0) - 1;
+    return (int) Math.ceil(orden/2.0) - 1;
   }
 
   // Es un nodo hoja
@@ -46,7 +46,7 @@ public class NodeB<T extends Comparable<T>> {
         }
       }
     }
-    pos[0] = this.keys.size();
+    pos[0] = this.count;
     return false;
   }
 
