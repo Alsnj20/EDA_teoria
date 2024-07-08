@@ -9,7 +9,9 @@ public class TestBST {
       arbol.insert(20);
       arbol.insert(5);
       arbol.insert(13);
-      System.out.println("Recorrido en preorden");
+      arbol.insert(7);
+      arbol.insert(19);
+      /*System.out.println("Recorrido en preorden");
       //System.out.println(arbol.preOrder());
       System.out.println("Recorrido en inorden");
       System.out.println(arbol.inOrder());
@@ -42,13 +44,15 @@ public class TestBST {
       System.out.println("Arbol");
       arbol.printTree();
       System.out.println("Eliminando el 11");
-      arbol.remove(11);
+      arbol.remove(11);*/
       System.out.println("Arbol");
     } catch (Exception e) {
       System.out.println(e.getMessage());
     } finally{
       arbol.printTree();
-      System.out.println(arbol.calcularEMC());
+      //System.out.println(arbol.calcularEMC());
+      System.out.println("Nodos Internos");
+      System.out.println(arbol.countNodes());
     }
   }
 }

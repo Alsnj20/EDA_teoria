@@ -1,75 +1,64 @@
 package Refuerzo;
 
 public class Heap<T extends Comparable<T>> {
-  private T[] a;
-  private int count;
+  private ArrayList<T> arr;
 
   public Heap(int size) {
-    a = (T[]) new Comparable[size];
+    arr = new ArrayList<>(size);
+    arr.add(null);
   }
 
-  // raiz: Math.floor(i/2)
-  // hijo der 2*i+1;
-  // hijo izq 2+i
-
-  public void insert(T item) {
-    if(count <= a.length){
-    a[count] = item;
-    for (int i = count; i > 0 && a[i].compareTo(a[i / 2]) < 0 ; i/= 2) {
-      swap(i, i/2);
+  public void push(T data) {
+    arr.add(data);
+    int i = arr.size() - 1;
+    while (i > 1 && arr.get(i).compareTo(arr.get(i / 2)) > 0) {
+      swap(i, i / 2);
+      i /= 2;
     }
-    count++;
-    }else{
-      T[] aa = (T[]) new Comparable[count*2];
-      for (int i = 0; i <= count; i++) {
-        aa[i] = a[i];
+  }
+
+  public void pop() {
+    if (arr.size() <= 1) {
+      System.out.println("Esta vacio");
+    }
+    T max = arr.get(1);
+    int size = arr.size() - 1;
+    arr.set(1, arr.get(size));
+    arr.removeLast();
+    size--;
+    int i = 1;
+
+    while (2 * i <= size) {
+      int child = 2 * i;
+      if (child + 1 <= size && arr.get(child + 1).compareTo(arr.get(child)) > 0) {
+        child += 1;
       }
-      this.a = aa;
+      if (arr.get(i).compareTo(arr.get(child)) > 0)
+        break;
+      swap(i, child);
+      i = child;
     }
   }
 
-  public void eliminar(T a[]) {
-    T m = a[1];
-    a[1] = a[count--];
-    int j = 1;
-    while (2 * j < count) {
-      int k = 2 * j; // el hijo izquierdo
-      if (k + 1 <= count && a[k + 1].compareTo(a[k]) > 0)
-        k = k + 1; // el hijo derecho es el mayor
-      if (a[j].compareTo(a[k]) > 0)
-        break; // es mayor que ambos hijos
-      T t = a[j];
-      a[j] = a[k];
-      a[k] = t;
-      j = k; // lo intercambiamos con el mayor hijo
-    }
+  public void swap(int i, int j) {
+    T tempo = arr.get(i);
+    arr.set(i, arr.get(j));
+    arr.set(j, tempo);
   }
 
-  private void swap(int i, int j) {
-    T temp = a[i];
-    a[i] = a[j];
-    a[j] = temp;
-  }
-
-  public void printHeap() {
-    for (int i = 0; i < count; i++) {
-      System.out.print(a[i] + " ");
-    }
-    System.out.println();
+  public String toString() {
+    return arr.toString();
   }
 
   public static void main(String[] args) {
-    Heap<Integer> heap = new Heap<>(20);
-    heap.insert(16);
-    heap.insert(2);
-    heap.insert(8);
-    heap.insert(7);
-    heap.insert(9);
-    heap.insert(3);
-    heap.insert(14);
-    heap.insert(10);
-    heap.printHeap();
-    heap.insert(15);
-    heap.printHeap();
+    Heap<Integer> heapmax = new Heap<>(20);
+    heapmax.push(14);
+    heapmax.push(13);
+    heapmax.push(16);
+    heapmax.push(12);
+    System.out.println(heapmax);
+    heapmax.pop();
+    heapmax.pop();
+    System.out.println(heapmax);
   }
 }

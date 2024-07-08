@@ -5,6 +5,7 @@ import java.util.List;
 
 import Exceptions.ItemDuplicated;
 import Exceptions.ItemNotFound;
+import Pilas.StackList;
 import Cola.QueueLink;
 
 public class BSTree<T extends Comparable<T>> {
@@ -330,15 +331,12 @@ public class BSTree<T extends Comparable<T>> {
     int totalNodos = 0;
     int totalComparaciones = 0;
     int nivel = 0;
-    System.out.println("Altura inicial" + queue.size());
 
     while (!queue.isEmpty()) {
       int nivelSize = queue.size();
       nivel++;
-      System.out.println("Nivel: "+nivel);
       for (int i = 0; i < nivelSize; i++) {
         try {
-          System.out.println(queue);
           NodeBST<T> temp = queue.dequeue();
           totalNodos++;
           totalComparaciones += nivel;
@@ -353,5 +351,31 @@ public class BSTree<T extends Comparable<T>> {
       }
     }
     return (double) totalComparaciones / totalNodos;
+  }
+  //Nodos Internos
+  public int countNodes(){
+    StackList<NodeBST<T>> stack = new StackList<>();
+    int countInternalNode = 0;
+    stack.push(this.root);
+    while(!stack.isEmpty()){
+      countInternalNode++;
+      try{
+      System.out.println("Stack: "+stack);
+      NodeBST<T> temp = stack.pop();
+      if(temp.getLeft() != null) {
+        System.out.println(temp.getLeft());
+        stack.push(temp.getLeft());
+      }else{
+      }
+      if(temp.getRight() != null){
+        System.out.println(temp.getRight());
+        stack.push(temp.getRight());
+      }else{
+      }
+      }catch(Exception e){
+        System.out.println(e.getMessage());
+      }
+    }
+    return countInternalNode;
   }
 }
