@@ -50,15 +50,7 @@ public class NodeB<T extends Comparable<T>> {
     return false;
   }
 
-  public String toString(){
-    String str = "";
-    str += "(";
-    for (int i = 0; i < this.keys.size(); i++) {
-      if(this.keys.get(i) != null){
-        str += this.keys.get(i) + "";
-      }
-    }
-    str += ")";
-    return str;
+  public String toString() {
+    return "NodeB{" + "keys=" + keys + ", count=" + count + '}';
   }
 }
