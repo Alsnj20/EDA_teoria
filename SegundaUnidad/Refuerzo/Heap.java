@@ -2,9 +2,11 @@ package Refuerzo;
 
 public class Heap<T extends Comparable<T>> {
   private ArrayList<T> arr;
+  private T[] a;
 
   public Heap(int size) {
     arr = new ArrayList<>(size);
+    a = (T[]) new Comparable[size];
     arr.add(null);
   }
 

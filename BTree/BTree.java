@@ -134,6 +134,7 @@ public class BTree<T extends Comparable<T>> {
     }
     return s;
   }
+
   public static void main(String[] args) {
     BTree<Integer> b = new BTree<>(4);
     try {
@@ -144,32 +145,12 @@ public class BTree<T extends Comparable<T>> {
       b.insert(12);
       b.insert(30);
       b.insert(7);
-      b.insert(17);
-      b.insert(15);
-      b.insert(16);
-      b.insert(4);
-      b.insert(2);
-      b.insert(3);
-      b.insert(1);
-      b.insert(8);
-      b.insert(9);
-      b.insert(11);
-      b.insert(13);
-      b.insert(14);
-      b.insert(18);
-      b.insert(19);
-      b.insert(21);
-      b.insert(22);
-      b.insert(23);
-      b.insert(24);
-      b.insert(25);
-      b.insert(26);
-      b.insert(27);
-      b.insert(28);
-      b.insert(43);
-  }catch(Exception e){
-    System.out.println(e.getMessage());
-  }
-    System.out.println(b);
+      System.out.println(b);
+      System.out.println("Buscando 10: " + b.search(10));
+      System.out.println("Buscando 20: " + b.search(20));
+      System.out.println("Buscando 5: " + b.search(5));
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
   }
 }
